@@ -1,19 +1,34 @@
 
-import { TextField } from "@mui/material";
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import Link from '@mui/material/Link';
+import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import MailOutlineIcon from '@mui/icons-material/MailOutline';
+
+
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUid } from "store/auth/auth-selectors";
 import { postMessage, fetchMessage } from "store/conversation/conversation-actions";
 import { selectMessages, selectReseiver } from "store/conversation/conversation-selectors";
-import "./conversation.css";
 
+
+
+const theme = createTheme();
 
 export default function Conversation() {
 
   const chatBodyRef = useRef(null);
 
   const dispatch = useDispatch();
-  
+
   const [conversationId, setConversationId] = useState(null);
   const [message, setMessage] = useState('');
 
@@ -21,8 +36,8 @@ export default function Conversation() {
   const messages = useSelector(selectMessages);
   const receiver = useSelector(selectReseiver);
 
-  
-  
+
+
   useEffect(() => {
     if (!receiver || !uid) return;
 
@@ -33,14 +48,16 @@ export default function Conversation() {
 
     setConversationId(myConvId);
   }, [receiver, uid]);
-  
+
   useEffect(() => {
     dispatch(fetchMessage(conversationId))
   }, [conversationId, dispatch]);
 
 
-  const sendMessage = useCallback(() => {  
-    dispatch(postMessage(conversationId, message, uid))
+  const sendMessage = useCallback(() => {
+    dispatch(postMessage(conversationId, message.trim(), uid))
+
+    setMessage('');
   }, [conversationId, message, uid, dispatch])
 
 
@@ -50,63 +67,95 @@ export default function Conversation() {
     }
   };
 
-  const scollToBottomOfChat = () => {
-    if (!chatBodyRef.current) return;
-    chatBodyRef.current.style.scrollBehavior = "smooth";
-    chatBodyRef.current.scrollTop = chatBodyRef.current.scrollHeight;
-  };
-
   return (
-    <div>
-    {receiver ? (
-      <div>
-        <div className="user-conversation-header">
-          <div className="user-conv-header-container">
-            <div className="user-profile-pic-container">
-              <p className="user-profile-pic-text">{receiver.email[0]}</p>
-            </div>
-            <p>{receiver.email}</p>
-          </div>
+    <Grid container
+      direction="column"
+      alignItems="stretch"
+      sx={{ height: '100%', width: '100%' }}
+    >
+      {receiver ? (
+        <>
+          <Grid item component="User"
+            sx={{
+              border: '1px solid rgb(112, 110, 110, 0.2)',
+              height: '10%',
+              width: '100%'
+            }}>
+            <MailOutlineIcon sx={{
+              fontSize: '35px',
+              m: 1,
+              color: 'primary'
+            }} />
+            <Typography
+              variant="h6"
+              component="span">
+              {receiver.email}
+            </Typography>
+          </Grid>
 
-          <div className="user-conv-header-container">
-          </div>
-        </div>    
-
-             <div className="conversation-messages" ref={chatBodyRef}>
+          <Grid
+            item
+            component="chat"
+            sx={{
+              overflow: 'scroll',
+              border: '1px solid rgb(112, 110, 110, 0.2)',
+              width: '100%',
+              height: '80%',
+            }}>
             {messages.length > 0 ? (
               messages.map((obj, i) => (
-                <div
+                <Grid
+                  item
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'colomn',
+                  }}
                   key={i}
-                  className="message-container"
                   style={{ justifyContent: obj.uid === uid && "flex-end" }}
                 >
-                  <div className="message-bubble">{obj.message}</div>
-                </div>
+                  <Typography>{obj.message}</Typography>
+                </Grid>
               ))
             ) : (
-              <div className="no-conversation">
-                <div>
-                </div>
-                <p>Start a conversation with {receiver.email}</p>
-              </div>
+              <Grid item>
+                <Typography>Start a conversation with {receiver.email}</Typography>
+              </Grid>
             )}
-          </div>
+          </Grid>
 
-          <div className="input-container">
-            <div className="input-message">
-              <input placeholder="Hi.." onChange={(e) => setMessage(e.target.value)} onKeyPress={handleEnterKeyPressDown} />
-            </div>
-            <button onClick={sendMessage}>Send</button>
-          </div>
-        </div>
-    ) : (
-      <div className="no-conversation">
-        <div>
-        </div>
-        <p>Pick someone to talk to.</p>
-      </div>
-    )}
-  </div>
+          <Grid 
+          item
+          component="Text"
+            sx={{
+              height: '10%',
+              border: '1px solid rgb(112, 110, 110, 0.2)',
+              display: 'flex',
+              flexDirection: 'row',
+            }}>
+            <TextField
+              sx={{
+                height: '100%',
+                width: '80%',
+              }}
+              autoFocus
+              placeholder="Hi.."
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              onKeyPress={handleEnterKeyPressDown} />
+            <Button
+              sx={{
+                height: '100%',
+                width: '20%',
+              }} onClick={sendMessage} >Send</Button>
+          </Grid>
+        </>
+      ) : (
+        <Grid className="no-conversation">
+          <Typography>Pick someone to talk to.</Typography>
+        </Grid>
+      )}
+    </Grid>
+
   )
 }
 

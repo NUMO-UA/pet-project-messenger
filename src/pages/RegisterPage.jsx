@@ -8,7 +8,7 @@ export const RegisterPage = () => {
 
 
     return isAuth ? (
-        <Redirect to="/register" />
+        <Redirect to="/" />
     ) : (
         <div>
             <Register />      

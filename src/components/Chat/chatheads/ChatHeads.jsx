@@ -1,10 +1,25 @@
-import { useDispatch} from "react-redux";
+import * as React from 'react';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import Link from '@mui/material/Link';
+import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useState } from 'react';
+import { useDispatch } from "react-redux";
 import { addReceiver } from "store/conversation/conversation-actions";
-import "./chatheads.css";
+import { InputBase } from '@mui/material';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
 
-export default function ChatHeads({items, onHandleSearch}) {
 
-  
+const theme = createTheme();
+
+export default function ChatHeads({ items, onHandleSearch }) {
 
   const dispatch = useDispatch();
 
@@ -17,34 +32,53 @@ export default function ChatHeads({items, onHandleSearch}) {
   }
 
   return (
-    <div>
-      <div className="conv-header-container">
-        <p className="conversations-header">Conversations</p>
-        <div>
-        </div>
-      </div>
-      <input
-        className="chat-heads-search"
-        placeholder="Search in Messenger"
-        autoFocus
-        autoComplete="off"
-        type='search'
-        onChange={handleSearch}
-        />
-        <div className="chat-heads-container">
+    <Grid
+    container
+    direction="column"
+    alignItems="stretch"
+    sx={{ height: '100%', width: '100%' }} >
+      <Grid 
+      item
+        sx={{
+          marginLeft: '2%',
+          height: '15%',
+          width: '80%'
+        }}>
+        <Typography>Conversations</Typography>
+        <TextField
+          placeholder="Search…"
+          inputProps={{ 'aria-label': 'search' }}
+          autoFocus
+          autoComplete="off"
+          type='search'
+          onChange={handleSearch} />
+      </Grid>
+      <Grid
+        item
+        component="Users"
+        sx={{
+          overflow: 'scroll',
+          height: '80%',
+          width: '100%'
+        }}>
         {items.map((obj, i) => (
-          <div
+          <Grid item sx={{
+            marginLeft: '2%',
+            display: 'flex',
+            flexDirection: 'colomn',
+            alignItems: 'center',
+          }}
             key={i}
             className="chat-head-item"
             onClick={() => handleReceiver(obj)}
           >
-            <div className="user-profile-pic-container">
-              <p className="user-profile-pic-text">{obj.email[0]}</p>
-            </div>
-            <p>{obj.email}</p>
-          </div>
+            <AccountBoxIcon sx={{ fontSize: '50px', color: 'secondary.main' }} />
+            <Typography>{obj.email}</Typography>
+          </Grid>
         ))}
-      </div>
-    </div>
+      </Grid>
+
+
+    </Grid>
   )
 }

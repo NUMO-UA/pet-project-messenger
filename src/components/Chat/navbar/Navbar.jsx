@@ -1,8 +1,8 @@
+import { AppBar, Box, Button, createTheme, Grid, IconButton, Toolbar, Typography } from "@mui/material";
 import { useAuth } from "hooks/use-auth";
 import { useDispatch } from 'react-redux'
 import { removeUser } from "store/auth/auth-actions";
-import "./navbar.css";
-
+import ChatIcon from '@mui/icons-material/Chat';
 
 export const Navbar = () => {
 
@@ -10,23 +10,31 @@ export const Navbar = () => {
 
   const { isAuth, email } = useAuth();
 
+  const theme = createTheme();
+
 
   return isAuth ? (
-    <div>
-      <div className="chat-head-item-navbar">
-        <div className="user-profile-pic-container">
-          <p className="user-profile-pic-text"></p>
-        </div>
-        <div>
-          <p className="user-name">{email}</p>
-          <div className="log-out-button">
-            <button
-              onClick={() => dispatch(removeUser())}
-            >Log out</button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <AppBar position='static'>
+      <Toolbar>
+        <IconButton>
+          <ChatIcon sx={{ fontSize: '45px', m: 1, color: 'primary' }} />
+        </IconButton>
+        <Typography
+          variant="h6"
+          component="span"
+        >
+          CHAT
+        </Typography>
+        <Grid
+          container
+          direction="row"
+          justifyContent="flex-end"
+          alignItems="center" >
+          <Button variant="contained" color="secondary" onClick={() => dispatch(removeUser())} >Log out</Button>
+          <Typography variant="h6" component="span" className="user-name">{email}</Typography>
+        </Grid>
+      </Toolbar>
+    </AppBar>
   ) : (
     <></>
   )

@@ -19,13 +19,6 @@ export const getMessages = (messages) => ({
     
 })
 
-// export const sendMessages = (messages) => ({
-//     type: ADD_MESSAGES,
-//     messages,
-    
-    
-// })  
-
 export const addConversationId = (ConversationId) => ({
     type: ADD_CONVERSATIONID,
     ConversationId,
@@ -34,22 +27,18 @@ export const addConversationId = (ConversationId) => ({
 
 
 export const postMessage = (conversationId, message, uid) => {
-    console.log('conversationId',conversationId)
-    console.log('uid',uid)
-    console.log('message',message)
+
     return async function(dispatch) {
-    if (!message) return;
+    if (message.length === 0) return;
 
     const myMessage = {
       message,
-      uid: uid,
+      uid,
     };
-    
-    // add and save message to firestore
+
     const conversationRef = doc(db, "conversations", conversationId);
     const docSnap = await getDoc(conversationRef);
 
-    // append message to existing conversation
     if (docSnap.exists()) {
       const docData = docSnap.data();
       await updateDoc(conversationRef, {
@@ -61,7 +50,6 @@ export const postMessage = (conversationId, message, uid) => {
         messages: [myMessage],
       });
     }
-    message = "";
 }
 }
 
