@@ -1,23 +1,31 @@
 import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useState } from 'react';
 import { useDispatch } from "react-redux";
 import { addReceiver } from "store/conversation/conversation-actions";
-import { InputBase } from '@mui/material';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import { createTheme } from '@mui/material';
 
 
-const theme = createTheme();
+export const theme = createTheme({
+  palette: {
+    primary: {
+      light: '#757ce8',
+      main: '#3f50b5',
+      dark: '#002884',
+      contrastText: '#fff',
+    },
+    secondary: {
+      light: '#ff7961',
+      main: '#f44336',
+      dark: '#ba000d',
+      contrastText: '#000',
+    },
+  },
+});
+
+
 
 export default function ChatHeads({ items, onHandleSearch }) {
 
@@ -33,19 +41,32 @@ export default function ChatHeads({ items, onHandleSearch }) {
 
   return (
     <Grid
-    container
-    direction="column"
-    alignItems="stretch"
-    sx={{ height: '100%', width: '100%' }} >
-      <Grid 
-      item
+      container
+      direction="column"
+      alignItems="stretch"
+      sx={{
+        border: '1px solid rgb(112, 110, 110, 0.2)',
+        height: '100%',
+        width: '100%'
+      }} >
+      <Grid
+        item
         sx={{
-          marginLeft: '2%',
-          height: '15%',
+          height: '25%',
           width: '80%'
         }}>
-        <Typography>Conversations</Typography>
+        <Typography 
+          variant="h6"
+        sx={{
+          marginLeft: '45%',
+          marginTop: '5%',
+          marginBottom: '5%',
+        }}>Conversations</Typography>
         <TextField
+        sx={{
+          marginLeft: '10%',
+          width: '100%'
+        }}
           placeholder="Search…"
           inputProps={{ 'aria-label': 'search' }}
           autoFocus
@@ -58,7 +79,7 @@ export default function ChatHeads({ items, onHandleSearch }) {
         component="Users"
         sx={{
           overflow: 'scroll',
-          height: '80%',
+          height: '73%',
           width: '100%'
         }}>
         {items.map((obj, i) => (

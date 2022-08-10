@@ -1,19 +1,12 @@
 
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUid } from "store/auth/auth-selectors";
 import { postMessage, fetchMessage } from "store/conversation/conversation-actions";
@@ -21,11 +14,8 @@ import { selectMessages, selectReseiver } from "store/conversation/conversation-
 
 
 
-const theme = createTheme();
 
 export default function Conversation() {
-
-  const chatBodyRef = useRef(null);
 
   const dispatch = useDispatch();
 
@@ -100,7 +90,7 @@ export default function Conversation() {
               overflow: 'scroll',
               border: '1px solid rgb(112, 110, 110, 0.2)',
               width: '100%',
-              height: '80%',
+              height: '82%',
             }}>
             {messages.length > 0 ? (
               messages.map((obj, i) => (
@@ -127,7 +117,7 @@ export default function Conversation() {
           item
           component="Text"
             sx={{
-              height: '10%',
+              height: '8%',
               border: '1px solid rgb(112, 110, 110, 0.2)',
               display: 'flex',
               flexDirection: 'row',
@@ -144,7 +134,7 @@ export default function Conversation() {
               onKeyPress={handleEnterKeyPressDown} />
             <Button
               sx={{
-                height: '100%',
+                height: '90%',
                 width: '20%',
               }} onClick={sendMessage} >Send</Button>
           </Grid>
