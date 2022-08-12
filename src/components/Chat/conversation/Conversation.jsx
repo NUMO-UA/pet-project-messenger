@@ -61,12 +61,13 @@ export default function Conversation() {
     <Grid container
       direction="column"
       alignItems="stretch"
-      sx={{ height: '100%', width: '100%' }}
+      sx={{ height: '100%', width: '100%'}}
     >
       {receiver ? (
         <>
-          <Grid item component="User"
-            sx={{
+          <Grid item component="User"          
+            direction="rows"
+            sx={{              
               border: '1px solid rgb(112, 110, 110, 0.2)',
               height: '10%',
               width: '100%'
@@ -77,7 +78,7 @@ export default function Conversation() {
               color: 'primary'
             }} />
             <Typography
-              variant="h6"
+              variant="h5"
               component="span">
               {receiver.email}
             </Typography>
@@ -90,7 +91,7 @@ export default function Conversation() {
               overflow: 'scroll',
               border: '1px solid rgb(112, 110, 110, 0.2)',
               width: '100%',
-              height: '82%',
+              height: '81%',
             }}>
             {messages.length > 0 ? (
               messages.map((obj, i) => (
@@ -117,7 +118,7 @@ export default function Conversation() {
           item
           component="Text"
             sx={{
-              height: '8%',
+              height: '9%',
               border: '1px solid rgb(112, 110, 110, 0.2)',
               display: 'flex',
               flexDirection: 'row',
@@ -126,7 +127,7 @@ export default function Conversation() {
               sx={{
                 height: '100%',
                 width: '80%',
-              }}
+              }} 
               autoFocus
               placeholder="Hi.."
               value={message}

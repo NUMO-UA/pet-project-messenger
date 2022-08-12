@@ -6,7 +6,6 @@ import { useAuth } from 'hooks/use-auth';
 import ChatHeads from 'components/Chat/chatheads/ChatHeads';
 import Conversation from 'components/Chat/conversation/Conversation';
 
-import "./HomePage.css";
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUsers } from 'store/users/users-actions';
@@ -27,9 +26,7 @@ export const HomePage = (props) => {
     const items = useSelector(state => selectVisibleCUsers(state, { search }))
 
     const handleSearch = useCallback((value) => {
-
         setSearch(value)
-
     },[])
 
     useEffect(() => {
@@ -44,12 +41,12 @@ export const HomePage = (props) => {
         <Grid
         container
         direction="rows" 
-        sx={{ height: '640px', width: '100%' }}
+        sx={{ height: '89vh', width: '100%' }}
         >
-            <Grid item sx={{ height: '100%', width: '30%' }}>
+            <Grid item sx={{ height: '100%', width: '20%' }}>
                 <ChatHeads items={items} onHandleSearch={handleSearch} />
             </Grid>
-            <Grid item sx={{ height: '100%', width: '70%' }}>
+            <Grid item sx={{ height: '100%', width: '80%' }}>
                 <Conversation />
             </Grid>
         </Grid>

@@ -58,13 +58,13 @@ export default function ChatHeads({ items, onHandleSearch }) {
         <Typography 
           variant="h6"
         sx={{
-          marginLeft: '45%',
+          marginLeft: '15%',
           marginTop: '5%',
           marginBottom: '5%',
         }}>Conversations</Typography>
         <TextField
         sx={{
-          marginLeft: '10%',
+          marginLeft: '5%',
           width: '100%'
         }}
           placeholder="Search…"

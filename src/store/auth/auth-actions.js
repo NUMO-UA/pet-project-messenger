@@ -21,7 +21,7 @@ export const removeUser = () => ({
 
 export const onLogin = (email, password) => {
 
-    return function(dispatch) {
+    return async function(dispatch) {
         const auth = getAuth();
         signInWithEmailAndPassword(auth, email, password)
             .then(({ user }) => {
@@ -37,7 +37,7 @@ export const onLogin = (email, password) => {
 
 export const onRegister = (email, password) => {
 
-    return function(dispatch) {
+    return async function(dispatch) {
         const auth = getAuth();
         createUserWithEmailAndPassword(auth, email, password)
             .then(({user}) => {
