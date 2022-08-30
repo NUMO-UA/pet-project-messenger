@@ -43,7 +43,7 @@ export const onRegister = (email, password) => {
             .then(({user}) => {
                 dispatch(addUser({
                     email: user.email,
-                    id: user.uid,
+                    uid: user.uid,
                     token: user.accessToken,
                 }));
 
